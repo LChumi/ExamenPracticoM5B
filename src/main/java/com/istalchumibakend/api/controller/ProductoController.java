@@ -33,17 +33,17 @@ public class ProductoController {
 	}
 	
 	@GetMapping("/buscarId/{id}")
-	public ResponseEntity<?> read (@PathVariable(value="id")Long id_cancion){
-		Optional<Producto> oCancion= productoService.findById(id_cancion);
-		if(!oCancion.isPresent()) {
+	public ResponseEntity<?> read (@PathVariable(value="id")Long codigo){
+		Optional<Producto> oProducto= productoService.findById(codigo);
+		if(!oProducto.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(oCancion);
+		return ResponseEntity.ok(oProducto);
 	}
 	
 	@PutMapping("/actualizarProducto/{id}")
-	public ResponseEntity<?> update(@RequestBody Producto productodetails,@PathVariable(value="id")Long id_cancion){
-		Optional<Producto> productoNew=productoService.findById(id_cancion);
+	public ResponseEntity<?> update(@RequestBody Producto productodetails,@PathVariable(value="id")Long codigo){
+		Optional<Producto> productoNew=productoService.findById(codigo);
 		if(!productoNew.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -56,12 +56,12 @@ public class ProductoController {
 	}
 	
 	@DeleteMapping("/borrar/{id}")
-	public ResponseEntity<?> delete (@PathVariable(value="id")Long id_cancion){
-		if(!productoService.findById(id_cancion).isPresent()) {
+	public ResponseEntity<?> delete (@PathVariable(value="id")Long codigo){
+		if(!productoService.findById(codigo).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		productoService.deleteById(id_cancion);
+		productoService.deleteById(codigo);
 		return ResponseEntity.ok().build();
 	}
 	
@@ -70,5 +70,17 @@ public class ProductoController {
 		List<Producto> productos=StreamSupport.stream(productoService.findAll().spliterator(), false).collect(Collectors.toList());
 		return productos;
 	}
+	
+	@GetMapping("/productos/percios")
+	public String mostrarPrecios(@PathVariable(value="id")Long codigo) {
+		Optional<Producto> oProducto= productoService.findById(codigo);
+		if(!oProducto.isPresent()) {
+		 ResponseEntity.notFound().build();
+		}
+		 ResponseEntity.ok(oProducto);
+		 return oProducto.toString();
+	}
+	
+	
 	
 }

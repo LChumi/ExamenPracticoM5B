@@ -71,12 +71,30 @@ public class Producto implements Serializable{
 		this.cantidad = cantidad;
 	}
 	
-	public Double obtenerTotal() {
+	public Double subtotal() {
 		return this.precio*this.cantidad;
 	}
 	
 	public Double calcularIva() {
-		return obtenerTotal()*1.12;
+		return subtotal()*1.12;
+	}
+	
+	public double calculaerDescuento() {
+		double res=0;
+		if(subtotal()>=50) {
+			res=subtotal()*0.10;
+		}return res;
+	}
+	
+	public double total() {
+		return subtotal()+calcularIva()-calculaerDescuento();
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [codigo=" + codigo + ", descripcion=" + descripcion + ", precio=" + precio + ", cantidad="
+				+ cantidad + ", subtotal()=" + subtotal() + ", calcularIva()=" + calcularIva()
+				+ ", calculaerDescuento()=" + calculaerDescuento() + ", total()=" + total() + "]";
 	}
 	
 	
